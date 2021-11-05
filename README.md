@@ -1,6 +1,6 @@
 # Multi-User Application with Springboot 
 
-This is our uek project
+This is our uk project
 
 ## Getting Started
 
