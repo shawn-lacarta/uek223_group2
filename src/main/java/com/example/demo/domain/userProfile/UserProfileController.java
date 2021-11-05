@@ -1,7 +1,5 @@
 package com.example.demo.domain.userProfile;
 
-public class UserProfile {
 
-
-
+public class UserProfileController {
 }
