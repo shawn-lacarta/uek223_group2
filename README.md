@@ -42,7 +42,7 @@ Any advise for common problems or issues.
 
 ## Authors
 
-Contributors names and contact info
+Contributors names
 
 ex. Shawn Lacarta  
 ex. Matijas Polazarov  
