@@ -36,7 +36,7 @@ class AppStartupRunner implements ApplicationRunner {
 //        e.g. to add a user or role to the DB (only for testing)
 
 //        Authorities
-        Authority read_auth=new Authority(null,"READ");
+      /*  Authority read_auth=new Authority(null,"READ");
         authorityRepository.save(read_auth);
 
 //        Roles
@@ -44,7 +44,7 @@ class AppStartupRunner implements ApplicationRunner {
         roleRepository.save(default_role);
 
         userService.saveUser(new User(null, "james","james.bond@mi6.com","bond", Set.of(default_role)));
-        userService.addRoleToUser("james", "DEFAULT");
+        userService.addRoleToUser("james", "DEFAULT");*/
     }
 }
 

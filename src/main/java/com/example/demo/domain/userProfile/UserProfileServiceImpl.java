@@ -1,4 +1,6 @@
 package com.example.demo.domain.userProfile;
+import org.springframework.stereotype.Service;
 
-public class UserProfileServiceImpl {
+@Service
+public class UserProfileServiceImpl implements UserProfileService {
 }
