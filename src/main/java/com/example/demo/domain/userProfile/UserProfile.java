@@ -1,5 +1,6 @@
 package com.example.demo.domain.userProfile;
 
+import com.example.demo.domain.appUser.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,9 @@ public class UserProfile {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
 
