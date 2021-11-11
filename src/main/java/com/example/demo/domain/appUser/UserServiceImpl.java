@@ -18,7 +18,9 @@ import javax.transaction.Transactional;
 
 import java.util.*;
 
-@Service @RequiredArgsConstructor @Transactional
+@Service
+@RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired

@@ -14,7 +14,7 @@ values  ('2aa70872-421a-11ec-81d3-0242ac130003', 'instructor@email', '123', 'ins
         ('415ab3e8-421a-11ec-81d3-0242ac130003', 'apprentice@email', 'bond', 'james'),
         ('ad717b9a-422c-11ec-81d3-0242ac130003', 'office@email.ch', 'work', 'malin');
 insert into public.users_roles (user_id, role_id)
-values  ('2aa70872-421a-11ec-81d3-0242ac130003', '8f72e074-4219-11ec-81d3-0242ac130003'),
+values  ('2aa70872-421a-11ec-81d3-0242ac130003', '83f97786-422c-11ec-81d3-0242ac130003'),
         ('415ab3e8-421a-11ec-81d3-0242ac130003', '2e510c1e-4217-11ec-81d3-0242ac130003'),
         ('ad717b9a-422c-11ec-81d3-0242ac130003', '8f72e074-4219-11ec-81d3-0242ac130003');
 insert into public.role_authorities (role_id, authority_id)

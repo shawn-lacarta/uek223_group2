@@ -2,7 +2,6 @@ package com.example.demo.domain.appUser;
 
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.userProfile.UserProfile;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,8 +38,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
-    @JsonBackReference
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private UserProfile userProfile;
+
+
 
 }
