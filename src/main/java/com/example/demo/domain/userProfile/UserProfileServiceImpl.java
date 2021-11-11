@@ -1,9 +1,11 @@
 package com.example.demo.domain.userProfile;
 import com.example.demo.domain.appUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
+import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,5 +44,15 @@ public class UserProfileServiceImpl implements UserProfileService {
         }else{
             return null;
         }
+    }
+    @Override
+    public String deleteById(UUID id) {
+        Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
+        if (optionalUserProfile.isEmpty()) {
+            return "NO USER FOUND";
+        } else {
+            userProfileRepository.deleteById(id);
+        }
+        return null;
     }
 }

@@ -32,4 +32,12 @@ public class UserProfileController {
         return ResponseEntity.ok().body(this.userProfileService.findById(id));
     }
 
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
+    public ResponseEntity<String> deleteUserProfile(@PathVariable("id") UUID id) throws InstanceNotFoundException{
+        userProfileService.deleteById(id);
+        return ResponseEntity.ok().body("THIS USER GOT DELETED");
+    }
+
+
 }
