@@ -2,6 +2,7 @@ package com.example.demo.domain.userProfile;
 
 import com.example.demo.domain.appUser.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,20 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/userprofile")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class UserProfileController {
 
     private final UserProfileService userProfileService;
 
+    @Autowired
+    public UserProfileController(UserProfileService userProfileService){
+        this.userProfileService = userProfileService;
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('READ_OWN')")
-    public ResponseEntity<Optional<UserProfile>> getOwnUser(@PathVariable("id") UUID id, UserProfileService userProfileService) throws InstanceNotFoundException {
-        return ResponseEntity.ok().body(userProfileService.findById(id));
+    public ResponseEntity<UserProfile> getOwnUser(@PathVariable("id") UUID id) throws InstanceNotFoundException {
+        return ResponseEntity.ok().body(this.userProfileService.findById(id));
     }
 
     @GetMapping("/getAllUsers")

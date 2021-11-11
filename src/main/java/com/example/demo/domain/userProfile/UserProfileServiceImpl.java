@@ -1,6 +1,8 @@
 package com.example.demo.domain.userProfile;
 import com.example.demo.domain.appUser.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +12,26 @@ import java.util.Optional;
 import java.util.UUID;
 @Getter
 @Setter
+@NoArgsConstructor
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
+
+
+    private UserProfileRepository userProfileRepository;
+
     @Autowired
-    UserProfileRepository userProfileRepository;
+    public UserProfileServiceImpl(UserProfileRepository userProfileRepository){
+        this.userProfileRepository = userProfileRepository;
+    }
 
     @Override
-    public Optional<UserProfile> findById(UUID id){
-        return userProfileRepository.findById(id);
+    public UserProfile findById(UUID id){
+        Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
+        //return userProfileRepository.findById(id);
+        if(optionalUserProfile.isPresent()){
+            return optionalUserProfile.get();
+        }else{
+            return null;
+        }
     }
 }

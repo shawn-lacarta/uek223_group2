@@ -2,6 +2,7 @@ package com.example.demo.domain.appUser;
 
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.userProfile.UserProfile;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,7 +40,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
-
+    @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfile userProfile;
 

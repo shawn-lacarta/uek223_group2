@@ -1,6 +1,7 @@
 package com.example.demo.domain.userProfile;
 
 import com.example.demo.domain.appUser.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class UserProfile {
     private String nationality;
     @Column(name = "phone_number")
     private String phoneNumber;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
