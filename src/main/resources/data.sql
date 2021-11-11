@@ -32,4 +32,5 @@ values  ('8f72e074-4219-11ec-81d3-0242ac130003', 'd280cd04-4219-11ec-81d3-0242ac
         ('83f97786-422c-11ec-81d3-0242ac130003', '66262a24-422c-11ec-81d3-0242ac130003'),
         ('83f97786-422c-11ec-81d3-0242ac130003', 'a6952b0e-4219-11ec-81d3-0242ac130003');
 insert into public.user_profile (id, address, birth_date, nationality, phone_number, user_id)
-values  ('d8cf057a-4239-11ec-81d3-0242ac130003', 'NOSER', '31-12-2003', 'Swiss', '0761213141', '415ab3e8-421a-11ec-81d3-0242ac130003');
+values  ('d8cf057a-4239-11ec-81d3-0242ac130003', 'NOSER', '31-12-2003', 'Swiss', '0761213141', '415ab3e8-421a-11ec-81d3-0242ac130003'),
+        ('5b9b7994-4306-11ec-81d3-0242ac130003', 'NOSER YOUNG', '31-12-2003', 'GERMAN', '0761213141', '2aa70872-421a-11ec-81d3-0242ac130003');

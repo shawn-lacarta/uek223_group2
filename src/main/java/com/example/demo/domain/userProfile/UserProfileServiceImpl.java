@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,4 +44,6 @@ public class UserProfileServiceImpl implements UserProfileService {
             return null;
         }
     }
+
+    public List<UserProfile> findAllUsers(){ return userProfileRepository.findAll();}
 }
