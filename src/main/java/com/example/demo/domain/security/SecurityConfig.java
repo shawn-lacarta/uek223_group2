@@ -24,11 +24,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
                  auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
      }
 
+    /* @Override
+     protected void configure(HttpSecurity http) throws Exception {
+         http.httpBasic().and().csrf().disable()
+                 .authorizeRequests().anyRequest().authenticated();*/
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and()
+        http.httpBasic().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").hasAuthority("READ")
+                .antMatchers("/**").permitAll()
                 .and()
                 // some more method calls
                 .formLogin();

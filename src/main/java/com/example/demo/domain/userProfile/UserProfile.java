@@ -27,6 +27,7 @@ public class UserProfile {
     private String nationality;
     @Column(name = "phone_number")
     private String phoneNumber;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
