@@ -2,6 +2,7 @@ package com.example.demo.domain.appUser;
 
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.role.RoleRepository;
+import com.example.demo.domain.userProfile.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
