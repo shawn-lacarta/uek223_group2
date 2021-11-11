@@ -7,5 +7,5 @@ import javax.management.InstanceAlreadyExistsException;
 @Repository
 public interface UserProfileService {
 
-    UserProfile addUserProfile(UserProfile userProfile) throws InstanceAlreadyExistsException;
+    UserProfile addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException;
 }

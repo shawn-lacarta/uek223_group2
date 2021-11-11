@@ -28,7 +28,7 @@ public class UserProfileController {
 
     @PostMapping("/addUserProfile")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<UserProfile> addUserProfile(@RequestBody UserProfile userProfile) throws InstanceAlreadyExistsException {
+    public ResponseEntity<UserProfile> addUserProfile(@RequestBody NewUserProfile userProfile) throws InstanceAlreadyExistsException {
         return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
     }
 

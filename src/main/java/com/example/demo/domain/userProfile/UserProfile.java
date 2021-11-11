@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity(name = "user_profile")
