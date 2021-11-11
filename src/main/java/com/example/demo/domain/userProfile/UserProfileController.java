@@ -15,8 +15,14 @@ public class UserProfileController {
     private final UserProfileService userProfileService;
 
     @GetMapping("/read")
-    @PreAuthorize("hasAuthority('READALL')")
+    @PreAuthorize("hasAuthority('READ_ALL')")
     public ResponseEntity<String> TestRead() {
+        return ResponseEntity.ok().body("You Can Read This Page");
+    }
+
+    @GetMapping("/readOwn")
+    @PreAuthorize("hasAuthority('READ_OWN')")
+    public ResponseEntity<String> TestReadOWN() {
         return ResponseEntity.ok().body("You Can Read This Page");
     }
 
@@ -33,7 +39,7 @@ public class UserProfileController {
     }
 
     @GetMapping("/update")
-    @PreAuthorize("hasAuthority('UPDATEALL')")
+    @PreAuthorize("hasAuthority('UPDATE_ALL')")
     public ResponseEntity<String> TestUpdate() {
         return ResponseEntity.ok().body("You Can Update On This Page");
     }

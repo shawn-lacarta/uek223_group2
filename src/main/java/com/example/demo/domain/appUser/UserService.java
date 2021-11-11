@@ -2,6 +2,7 @@ package com.example.demo.domain.appUser;
 
 
 import com.example.demo.domain.role.Role;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
@@ -16,4 +17,6 @@ public interface UserService {
     User getUser(String username);
     Optional<User> findById(UUID id) throws InstanceNotFoundException;
     List<User> findAll();
+    UserDetails loadUserByUsername(String username);
+    User getUserByID(UUID id);
 }
