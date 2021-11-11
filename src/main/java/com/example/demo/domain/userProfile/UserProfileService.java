@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.UUID;
 public interface UserProfileService {
     UserProfile findById(UUID id);
-    UserProfile addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException;
+    String addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException;
     List<UserProfile> findAllUsers();
 }
