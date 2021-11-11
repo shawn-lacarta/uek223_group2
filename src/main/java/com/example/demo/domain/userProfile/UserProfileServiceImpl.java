@@ -19,17 +19,18 @@ public class UserProfileServiceImpl implements UserProfileService {
     private UserRepository userRepository;
 
     @Override
-    public UserProfile addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException {
+    public String addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException {
         UserProfile userProfile = new UserProfile(newUserProfile.getId(), newUserProfile.getAddress(),
                 newUserProfile.getBirthDate(), newUserProfile.getNationality(),
                 newUserProfile.getPhoneNumber(), userRepository.findById(newUserProfile.getUser_id()).orElse(null));
 
         if (userProfileRepository.existsById(userProfile.getId())){
-            throw new InstanceAlreadyExistsException("User profile already exists");
+            return"USERPROFILE ALREADY EXIST";
         }else if(userProfile.getUser() == null){
-            throw new NullPointerException("User doesn't exist");
+            return"USERPROFILE NOT FOUND";
         }else{
-            return userProfileRepository.save(userProfile);
+            userProfileRepository.save(userProfile);
+            return "USERPROFILE CREATED";
         }
     }
 
