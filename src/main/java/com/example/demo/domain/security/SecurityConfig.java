@@ -30,7 +30,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
                 .authorizeRequests()
                      .antMatchers("/userprofile").permitAll()
                      .and()
-                // some more method calls
                 .formLogin();
     }
  }

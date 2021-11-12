@@ -16,6 +16,15 @@ public class UserProfileAuthorization {
     @Autowired
     UserProfileRepository userProfileRepository;
 
+    /**
+     * This method checks if a the current user has the same id
+     * which he is trying to access. If he is the same user then
+     * return true and else not
+     * @param id
+     * @param currentUser
+     * @return
+     */
+
     public boolean hasUserId(UUID id, Principal currentUser){
         UUID idCurrent = userProfileRepository.findByUser(userRepository.findByUsername(currentUser.getName())).getId();
         if(idCurrent.equals(id))
