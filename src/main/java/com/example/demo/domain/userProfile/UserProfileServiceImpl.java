@@ -37,7 +37,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfile updateUserProfile(UserProfile newUserProfile, UUID id){
+    public UserProfile updateUserProfile(UserProfile newUserProfile, UUID id, Principal currentUser){
         return userProfileRepository.findById(id)
                 .map(updatedUserProfile -> {
                     updatedUserProfile.setAddress(newUserProfile.getAddress());

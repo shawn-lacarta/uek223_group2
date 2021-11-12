@@ -10,8 +10,7 @@ public interface UserProfileService {
     String addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException;
     List<UserProfile> findAllUsers();
     String deleteById(UUID id) throws NullPointerException;
-
-    UserProfile updateUserProfile(UserProfile userProfile, UUID id);
+    UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser);
 
 }
 

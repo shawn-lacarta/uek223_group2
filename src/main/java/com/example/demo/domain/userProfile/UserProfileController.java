@@ -41,12 +41,13 @@ public class UserProfileController {
     @GetMapping("/")
     @PreAuthorize("hasAuthority('READ_ALL')")
     public ResponseEntity<Collection<UserProfile>> getAllUser() {
-        return new ResponseEntity<Collection<UserProfile>>(userProfileService.findAllUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(userProfileService.findAllUsers(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public UserProfile updateUserProfile(@PathVariable UUID id, @RequestBody UserProfile userProfile,@AuthenticationPrincipal Principal currentUser){
-        return userProfileService.updateUserProfile(userProfile, id);
+    @PreAuthorize("@userProfileSecurity.hasUserId(#id, #currentUser) || hasAuthority('UPDATE_ALL')")
+    public ResponseEntity<UserProfile> updateUserProfile(@PathVariable UUID id, Principal currentUser, @RequestBody UserProfile userProfile){
+        return ResponseEntity.ok().body(userProfileService.updateUserProfile(userProfile, id, currentUser));
 
     }
 
