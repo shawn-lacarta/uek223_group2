@@ -45,7 +45,7 @@ public class UserProfileController {
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
-    public ResponseEntity<String> deleteUserProfile(@PathVariable("id") UUID id){
+    public ResponseEntity<String> deleteUserProfile(@PathVariable("id") UUID id) throws NullPointerException{
         return ResponseEntity.ok().body(userProfileService.deleteById(id));
     }
 

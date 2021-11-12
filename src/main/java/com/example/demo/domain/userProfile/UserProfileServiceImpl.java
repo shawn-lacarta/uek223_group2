@@ -50,11 +50,10 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
     }
     @Override
-    public String deleteById(UUID id) {
+    public String deleteById(UUID id) throws NullPointerException{
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isEmpty()) {
-            return "USER NOT FOUND";
-
+            throw new NullPointerException("USER NOT FOUND");
         } else {
             userProfileRepository.deleteById(id);
             return "USER DELETED";
