@@ -1,15 +1,19 @@
 package com.example.demo.domain.userProfile;
+import com.example.demo.domain.appUser.User;
 import com.example.demo.domain.appUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.InstanceAlreadyExistsException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
+
     @Autowired
     public UserProfileServiceImpl(UserProfileRepository userProfileRepository){
         this.userProfileRepository = userProfileRepository;
@@ -37,13 +41,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     public List<UserProfile> findAllUsers(){ return userProfileRepository.findAll();}
 
     @Override
-    public UserProfile findById(UUID id){
+    public UserProfile findById(UUID id, Principal currentUser) throws NullPointerException {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
-        //return userProfileRepository.findById(id);
         if(optionalUserProfile.isPresent()){
-            return optionalUserProfile.get();
-        }else{
-            return null;
+           return optionalUserProfile.get();
+        } else {
+            throw new NullPointerException();
         }
     }
     @Override
@@ -57,4 +60,5 @@ public class UserProfileServiceImpl implements UserProfileService {
             return "USER DELETED";
         }
     }
+
 }
