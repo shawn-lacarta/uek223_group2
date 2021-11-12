@@ -17,7 +17,7 @@ public class UserProfileAuthorization {
     UserProfileRepository userProfileRepository;
 
     public boolean hasUserId(UUID id, Principal currentUser){
-        UUID idCurrent = userProfileRepository.findUserProfileByUser(userRepository.findByUsername(currentUser.getName())).getId();
+        UUID idCurrent = userProfileRepository.findByUser(userRepository.findByUsername(currentUser.getName())).getId();
         if(idCurrent.equals(id))
             return true;
         return false;
