@@ -1,24 +1,23 @@
 package com.example.demo.domain.userProfile;
+
 import com.example.demo.domain.appUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
-    public UserProfileServiceImpl(UserProfileRepository userProfileRepository){
-        this.userProfileRepository = userProfileRepository;
-    }
-    @Autowired
     private UserProfileRepository userProfileRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    public UserProfileServiceImpl(UserProfileRepository userProfileRepository) {
+        this.userProfileRepository = userProfileRepository;
+    }
 
     @Override
     public UserProfile addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException {
@@ -26,33 +25,35 @@ public class UserProfileServiceImpl implements UserProfileService {
                 newUserProfile.getBirthDate(), newUserProfile.getNationality(),
                 newUserProfile.getPhoneNumber(), userRepository.findById(newUserProfile.getUser_id()).orElse(null));
 
-        if (userProfileRepository.existsById(userProfile.getId())){
+        if (userProfileRepository.existsById(userProfile.getId())) {
             throw new InstanceAlreadyExistsException("User profile already exists");
-        }else if(userProfile.getUser() == null){
+        } else if (userProfile.getUser() == null) {
             throw new NullPointerException("User doesn't exist");
-        }else{
+        } else {
             return userProfileRepository.save(userProfile);
         }
     }
 
     @Override
-    public UserProfile findById(UUID id){
+    public UserProfile findById(UUID id) {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         //return userProfileRepository.findById(id);
-        if(optionalUserProfile.isPresent()){
+        if (optionalUserProfile.isPresent()) {
             return optionalUserProfile.get();
-        }else{
+        } else {
             return null;
         }
     }
+
     @Override
     public String deleteById(UUID id) {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isEmpty()) {
-            return "NO USER FOUND";
+            return "USER NOT FOUND";
+
         } else {
             userProfileRepository.deleteById(id);
+            return "USER DELETED";
         }
-        return null;
     }
 }
