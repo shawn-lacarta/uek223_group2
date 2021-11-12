@@ -42,8 +42,8 @@ public class UserProfileController {
     }
 
     @PutMapping("/{id}")
-    public UserProfile updateUserProfile(@PathVariable UUID id, @RequestBody UserProfile userProfile,@AuthenticationPrincipal Principal currentUser) throws InstanceNotFoundException{
-        return userProfileService.updateUserProfile(userProfile, id, currentUser);
+    public UserProfile updateUserProfile(@PathVariable UUID id, @RequestBody UserProfile userProfile,@AuthenticationPrincipal Principal currentUser){
+        return userProfileService.updateUserProfile(userProfile, id);
 
     }
 }

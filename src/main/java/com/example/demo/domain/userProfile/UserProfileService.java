@@ -15,5 +15,5 @@ public interface UserProfileService {
 
     List<UserProfile> findAllUsers();
 
-    UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser) throws InstanceNotFoundException;
+    UserProfile updateUserProfile(UserProfile userProfile, UUID id);
 }

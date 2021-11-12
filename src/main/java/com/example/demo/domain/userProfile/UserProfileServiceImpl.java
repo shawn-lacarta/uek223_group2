@@ -57,17 +57,17 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 
     @Override
-    public UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser) throws InstanceNotFoundException{
-        if (userProfileRepository.existsById(id)) {
-                            userProfile.setAddress(userProfile.getAddress());
-                            userProfile.setBirthDate(userProfile.getBirthDate());
-                            userProfile.setNationality(userProfile.getNationality());
-                            userProfile.setPhoneNumber(userProfile.getPhoneNumber());
-                            return userProfileRepository.save(userProfile);
-
-        } else {
-            throw new InstanceNotFoundException("not found");
-        }
+    public UserProfile updateUserProfile(UserProfile newUserProfile, UUID id){
+       return userProfileRepository.findById(id)
+               .map(updatedUserProfile -> {
+                   updatedUserProfile.setAddress(newUserProfile.getAddress());
+                   updatedUserProfile.setNationality(newUserProfile.getNationality());
+                   updatedUserProfile.setBirthDate(newUserProfile.getBirthDate());
+                   updatedUserProfile.setPhoneNumber(newUserProfile.getPhoneNumber());
+                   return userProfileRepository.save(updatedUserProfile);
+               }).orElseGet(() -> {
+                   return userProfileRepository.save(newUserProfile);
+               });
     }
 
     private UserProfile newUserProfileToUserProfile(NewUserProfile newUserProfile) {
