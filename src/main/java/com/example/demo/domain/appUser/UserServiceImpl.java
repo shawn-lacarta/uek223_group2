@@ -91,8 +91,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-
-
     @Override
     public Optional<User> findById(UUID id) throws InstanceNotFoundException{
         if (userRepository.existsById(id)){

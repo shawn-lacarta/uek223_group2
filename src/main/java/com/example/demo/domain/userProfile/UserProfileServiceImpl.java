@@ -34,6 +34,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
     }
 
+    public List<UserProfile> findAllUsers(){ return userProfileRepository.findAll();}
+
     @Override
     public UserProfile findById(UUID id){
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
@@ -44,6 +46,15 @@ public class UserProfileServiceImpl implements UserProfileService {
             return null;
         }
     }
+    @Override
+    public String deleteById(UUID id) {
+        Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
+        if (optionalUserProfile.isEmpty()) {
+            return "USER NOT FOUND";
 
-    public List<UserProfile> findAllUsers(){ return userProfileRepository.findAll();}
+        } else {
+            userProfileRepository.deleteById(id);
+            return "USER DELETED";
+        }
+    }
 }

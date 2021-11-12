@@ -24,7 +24,6 @@ public class UserProfileController {
     public UserProfileController(UserProfileService userProfileService){
         this.userProfileService = userProfileService;
     }
-
     @PostMapping("/")
     @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<String> addUserProfile(@RequestBody NewUserProfile userProfile) throws  InstanceAlreadyExistsException {
@@ -40,5 +39,10 @@ public class UserProfileController {
     @PreAuthorize("hasAuthority('READ_ALL')")
     public ResponseEntity<Collection<UserProfile>> getAllUser() {
         return new ResponseEntity<Collection<UserProfile>>(userProfileService.findAllUsers(), HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
+    public ResponseEntity<String> deleteUserProfile(@PathVariable("id") UUID id){
+        return ResponseEntity.ok().body(userProfileService.deleteById(id));
     }
 }
