@@ -1,6 +1,8 @@
 package com.example.demo.domain.userProfile;
 
 
+import org.springframework.http.ResponseEntity;
+
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import java.security.Principal;
@@ -13,5 +15,5 @@ public interface UserProfileService {
 
     List<UserProfile> findAllUsers();
 
-    UserProfile updateUserProfile(Principal currentUser, UserProfile userProfile, UUID id) throws InstanceNotFoundException;
+    UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser) throws InstanceNotFoundException;
 }

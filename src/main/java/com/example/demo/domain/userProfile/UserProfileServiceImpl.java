@@ -1,8 +1,8 @@
 package com.example.demo.domain.userProfile;
 
-import com.example.demo.domain.appUser.User;
 import com.example.demo.domain.appUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -57,26 +57,17 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 
     @Override
-    public UserProfile updateUserProfile(Principal currentUser, UserProfile userProfile, UUID id) throws InstanceNotFoundException {
+    public UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser) throws InstanceNotFoundException{
         if (userProfileRepository.existsById(id)) {
-            return userProfileRepository.findById(id)
-                    .map(userProfile1 -> {
-                        userProfile1.setAddress(userProfile.getAddress());
-                        userProfile1.setBirthDate(userProfile.getBirthDate());
-                        userProfile1.setNationality(userProfile.getNationality());
-                        userProfile1.setPhoneNumber(userProfile.getPhoneNumber());
-                        return userProfileRepository.save(userProfile);
-
-                    }).orElseGet(() -> {
-                        return userProfileRepository.save(userProfile);
-
-                    });
-
+                            userProfile.setAddress(userProfile.getAddress());
+                            userProfile.setBirthDate(userProfile.getBirthDate());
+                            userProfile.setNationality(userProfile.getNationality());
+                            userProfile.setPhoneNumber(userProfile.getPhoneNumber());
+                            return userProfileRepository.save(userProfile);
 
         } else {
             throw new InstanceNotFoundException("not found");
         }
-
     }
 
     private UserProfile newUserProfileToUserProfile(NewUserProfile newUserProfile) {

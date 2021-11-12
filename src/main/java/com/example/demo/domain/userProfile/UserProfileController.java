@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -25,7 +26,7 @@ public class UserProfileController {
 
     @PostMapping("/")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<String> addUserProfile(@RequestBody NewUserProfile userProfile) throws  InstanceAlreadyExistsException {
+    public ResponseEntity<String> addUserProfile(@RequestBody NewUserProfile userProfile) throws InstanceAlreadyExistsException {
         return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
     }
     @GetMapping("/{id}")
@@ -41,8 +42,8 @@ public class UserProfileController {
     }
 
     @PutMapping("/{id}")
-    public UserProfile updateUserProfile(@PathVariable UUID id, @RequestBody UserProfile userProfile, Principal currentUser) throws InstanceNotFoundException{
-        return userProfileService.updateUserProfile(currentUser, userProfile, id);
+    public UserProfile updateUserProfile(@PathVariable UUID id, @RequestBody UserProfile userProfile,@AuthenticationPrincipal Principal currentUser) throws InstanceNotFoundException{
+        return userProfileService.updateUserProfile(userProfile, id, currentUser);
 
     }
 }
