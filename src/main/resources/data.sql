@@ -15,7 +15,7 @@ values  ('2aa70872-421a-11ec-81d3-0242ac130003', 'instructor@noseryoung.ch', 'Lu
         ('ad717b9a-422c-11ec-81d3-0242ac130003', 'romy@email.ch', 'RoImh', 'Romy'),
         ('9f8357f6-4407-11ec-81d3-0242ac130003', 'shawn@noseryoung.ch', 'ShLac', 'Shawn'),
         ('9b20c52c-4407-11ec-81d3-0242ac130003', 'matijas@noseryoung.ch', 'MaPol', 'Matijas'),
-        ('9e228b98-4407-11ec-81d3-0242ac130003', 'gianluca@email.ch', 'GiDaf', 'Gianluca'),
+        ('9e228b98-4407-11ec-81d3-0242ac130003', 'gianluca@email.ch', 'GiDaf', 'Gianluca');
 insert into public.users_roles (user_id, role_id)
 values  ('2aa70872-421a-11ec-81d3-0242ac130003', '83f97786-422c-11ec-81d3-0242ac130003'),
         ('415ab3e8-421a-11ec-81d3-0242ac130003', '2e510c1e-4217-11ec-81d3-0242ac130003'),
