@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,9 +32,9 @@ public class UserProfileController {
         return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
     }
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('READ_OWN')")
-    public ResponseEntity<UserProfile> getOwnUser(@PathVariable("id") UUID id) {
-        return ResponseEntity.ok().body(this.userProfileService.findById(id));
+    @PreAuthorize("@userProfileSecurity.hasUserId(#id, #currentUser) || hasAuthority('READ_ALL')")
+    public ResponseEntity<UserProfile> getOwnUser(@PathVariable UUID id, Principal currentUser) throws NullPointerException {
+        return ResponseEntity.ok().body(this.userProfileService.findById(id, currentUser));
     }
 
     @GetMapping("/")
@@ -40,9 +42,11 @@ public class UserProfileController {
     public ResponseEntity<Collection<UserProfile>> getAllUser() {
         return new ResponseEntity<Collection<UserProfile>>(userProfileService.findAllUsers(), HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deleteUserProfile(@PathVariable("id") UUID id){
         return ResponseEntity.ok().body(userProfileService.deleteById(id));
     }
+
 }
