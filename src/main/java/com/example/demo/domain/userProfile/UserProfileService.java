@@ -7,5 +7,5 @@ import java.util.UUID;
 public interface UserProfileService {
     UserProfile findById(UUID id);
     UserProfile addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException;
-    String deleteById(UUID id);
+    String deleteById(UUID id) throws NullPointerException;
 }
