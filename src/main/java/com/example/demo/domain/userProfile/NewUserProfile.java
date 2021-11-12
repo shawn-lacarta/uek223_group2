@@ -12,13 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewUserProfile {
-    private UUID id;
     private String address;
     private String birthDate;
     private String nationality;
     private String phoneNumber;
     private UUID user_id;
-
 }
-
-
