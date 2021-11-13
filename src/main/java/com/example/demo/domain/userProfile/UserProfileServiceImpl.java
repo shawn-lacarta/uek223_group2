@@ -2,11 +2,9 @@ package com.example.demo.domain.userProfile;
 import com.example.demo.domain.appUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.security.Principal;
@@ -26,15 +24,18 @@ public class UserProfileServiceImpl implements UserProfileService {
     private UserRepository userRepository;
 
     @Override
-    public String addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException {
+    public ResponseEntity addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException {
+
         UserProfile userProfile = newUserProfileToUserProfile(newUserProfile);
+
+
         if (userProfile.getUser() == null) {
-            return "USER NOT FOUND";
+            return ResponseEntity.status(404).body("USER NOT FOUND");
         } else if (userProfileRepository.findByUser(userProfile.getUser()) != null) {
-            return "USERPROFILE ALREADY EXISTS";
+            return ResponseEntity.status(409).body("USER ALREADY HAS USERPROFILE");
         } else {
             userProfileRepository.save(userProfile);
-            return "USERPROFILE CREATED";
+            return ResponseEntity.status(201).body("USERPROFILE CREATED");
         }
     }
 
@@ -70,13 +71,13 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 
     @Override
-    public String deleteById(UUID id) throws NullPointerException{
+    public ResponseEntity deleteById(UUID id) throws NullPointerException{
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isEmpty()) {
             throw new NullPointerException("USER NOT FOUND");
         } else {
             userProfileRepository.deleteById(id);
-            return "USER DELETED";
+            return ResponseEntity.status(200).body("USER DELETED");
         }
     }
     @Override

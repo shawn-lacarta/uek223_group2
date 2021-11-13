@@ -31,7 +31,7 @@ public class UserProfileController {
 
     @PostMapping("/")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<String> addUserProfile(@RequestBody NewUserProfile userProfile) throws InstanceAlreadyExistsException {
+    public ResponseEntity addUserProfile(@RequestBody NewUserProfile userProfile) throws InstanceAlreadyExistsException {
         return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
     }
     @GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class UserProfileController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
-    public ResponseEntity<String> deleteUserProfile(@PathVariable("id") UUID id) throws NullPointerException{
+    public ResponseEntity deleteUserProfile(@PathVariable("id") UUID id) throws NullPointerException{
         return ResponseEntity.ok().body(userProfileService.deleteById(id));
     }
 
