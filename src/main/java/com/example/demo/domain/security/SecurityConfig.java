@@ -27,9 +27,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
              http.httpBasic().and().csrf().disable()
-                .authorizeRequests()
-                     .antMatchers("/userprofile").permitAll()
+                     .authorizeRequests()
+                     .antMatchers("userprofile/").permitAll()
+                     .antMatchers(HttpMethod.GET,"/userprofile/*").hasAuthority("READ_ALL")
+                     .antMatchers(HttpMethod.POST, "/userprofile/{id}").hasAuthority("CREATE")
+                     .antMatchers(HttpMethod.DELETE, "/userprofile/{id}").hasAuthority("DELETE")
                      .and()
-                .formLogin();
+                     .formLogin();
     }
  }
