@@ -1,7 +1,12 @@
 package com.example.demo.domain.userProfile;
 import com.example.demo.domain.appUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.security.Principal;
@@ -22,10 +27,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException {
-
         UserProfile userProfile = newUserProfileToUserProfile(newUserProfile);
-
-
         if (userProfile.getUser() == null) {
             return "USER NOT FOUND";
         } else if (userProfileRepository.findByUser(userProfile.getUser()) != null) {
@@ -61,7 +63,10 @@ public class UserProfileServiceImpl implements UserProfileService {
         return userProfile;
     }
 
-    public List<UserProfile> findAllUsers(){ return userProfileRepository.findAll();}
+    @Override
+    public Page<UserProfile> findAllUsers(Pageable page){
+        return userProfileRepository.findAll(page);
+    }
 
 
     @Override
