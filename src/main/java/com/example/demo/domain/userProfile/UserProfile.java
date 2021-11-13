@@ -23,7 +23,7 @@ public class UserProfile {
     @Column(name = "address")
     private String address;
     @Column(name = "birth_date")
-    private String birthDate;
+    private LocalDate birthDate;
     @Column(name = "nationality")
     private String nationality;
     @Column(name = "phone_number")

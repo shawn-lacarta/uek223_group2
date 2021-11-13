@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class NewUserProfile {
     private String address;
-    private String birthDate;
+    private LocalDate birthDate;
     private String nationality;
     private String phoneNumber;
     private UUID user_id;
