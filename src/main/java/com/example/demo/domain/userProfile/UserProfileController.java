@@ -20,6 +20,10 @@ import javax.management.InstanceNotFoundException;
 import java.security.Principal;
 import java.util.*;
 
+/**
+ * This class is used to represent the endpoints for the userprofile.
+ * The endpoints include the GET-, POST-, PUT- and DELETE methods.
+ */
 @RestController
 @RequestMapping("/userprofile")
 public class UserProfileController {
