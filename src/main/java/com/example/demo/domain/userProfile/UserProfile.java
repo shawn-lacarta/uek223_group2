@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * This class is how our database is structured. We are working with this fields.
+ */
 @Entity(name = "user_profile")
 @Getter
 @Setter

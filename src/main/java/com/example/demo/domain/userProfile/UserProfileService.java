@@ -8,6 +8,10 @@ import javax.management.InstanceAlreadyExistsException;
 import java.security.Principal;
 import java.util.UUID;
 
+/**
+ * This is the interface of the UserServiceImpl class. Here the
+ * method headers are stored to create a better overview.
+ */
 public interface UserProfileService {
     ResponseEntity findById(UUID id, Principal currentUser);
 
