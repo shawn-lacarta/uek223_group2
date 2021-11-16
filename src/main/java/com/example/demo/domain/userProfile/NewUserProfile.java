@@ -8,6 +8,11 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.UUID;
 
+/**
+ * Since in the userprofile class you have to provide a whole user, we have created a newUserProfile
+ * class. With this class we can implement implementations more easily, because we don't have to
+ * provide a whole user each time, but only the user_id
+ */
 @Getter
 @Setter
 @NoArgsConstructor
