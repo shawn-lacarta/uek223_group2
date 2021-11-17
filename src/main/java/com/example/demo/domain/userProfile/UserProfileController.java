@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -81,7 +83,7 @@ public class UserProfileController {
      */
     @GetMapping("/")
     @PreAuthorize("hasAuthority('READ_ALL')")
-    public ResponseEntity<Collection<UserProfile>> getAllUser(Pageable page) {
+    public ResponseEntity<Collection<UserProfile>> getAllUser(@PageableDefault(size = 3) @SortDefault(sort = "address", direction = Sort.Direction.ASC) Pageable page) {
         logger.trace("GET ALL USERPROFILES ENDPOINT ACCESSED");
         return new ResponseEntity(userProfileService.findAllUsers(page), HttpStatus.OK);
     }
