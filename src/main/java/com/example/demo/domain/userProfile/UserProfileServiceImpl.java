@@ -105,7 +105,7 @@ public class UserProfileServiceImpl implements UserProfileService {
      * @return It returns a few user (pageable)
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public Page<UserProfile> findAllUsers(Pageable page) {
         return userProfileRepository.findAll(page);
     }
