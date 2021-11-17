@@ -3,6 +3,7 @@ package com.example.demo.domain.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,14 +24,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
                  auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
      }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and()
-                .authorizeRequests()
-                .antMatchers("/**").hasAuthority("READ")
-                .and()
-                // some more method calls
-                .formLogin();
+             http.httpBasic().and().csrf().disable()
+                     .authorizeRequests()
+                     .antMatchers("userprofile/").permitAll()
+                     .antMatchers(HttpMethod.GET,"/userprofile/*").hasAuthority("READ_ALL")
+                     .antMatchers(HttpMethod.POST, "/userprofile/{id}").hasAuthority("CREATE")
+                     .antMatchers(HttpMethod.DELETE, "/userprofile/{id}").hasAuthority("DELETE")
+                     .and()
+                     .formLogin();
     }
  }
