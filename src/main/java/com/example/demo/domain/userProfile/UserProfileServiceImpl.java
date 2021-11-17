@@ -33,13 +33,14 @@ public class UserProfileServiceImpl implements UserProfileService {
      * method, which is the whole creating process is stored in userProfile.
      * after that makes the following checks: User exists, User already has a
      * UserProfile and User Profile created successfully.
+     *
      * @param newUserProfile We must pass an userprofile so that we can create one
      * @return A response entity returns with the appropriate HTTP status and a message
      * @throws InstanceAlreadyExistsException Since it may be that the user already
-     * exists, we need to pass the InstanceAlreadyExistsException along.
+     *                                        exists, we need to pass the InstanceAlreadyExistsException along.
      */
     @Override
-    public ResponseEntity addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException, NullPointerException {
+    public UserProfile addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException, NullPointerException {
 
         UserProfile userProfile = newUserProfileToUserProfile(newUserProfile);
 
@@ -48,7 +49,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         } else if (userProfileRepository.findByUser(userProfile.getUser()) != null) {
             throw new InstanceAlreadyExistsException("USER ALREADY HAS USERPROFILE");
         } else {
-            return ResponseEntity.ok(userProfileRepository.save(userProfile));
+            return userProfileRepository.save(userProfile);
         }
     }
 
@@ -57,10 +58,11 @@ public class UserProfileServiceImpl implements UserProfileService {
      * through all fields and replaces this with the appropriate input.  Of course,
      * it has to check first if the id exists at all. If everything fits the method
      * replaces the new input with the old.
+     *
      * @param newUserProfile We must pass an userprofile so that we can create one
-     * @param id We need to pass the id to know which user to update
-     * @param currentUser We need to pass the currentUser to check if
-     * he can update his data
+     * @param id             We need to pass the id to know which user to update
+     * @param currentUser    We need to pass the currentUser to check if
+     *                       he can update his data
      * @return It returns the updated userprofile.
      */
     @Override
@@ -82,6 +84,7 @@ public class UserProfileServiceImpl implements UserProfileService {
      * the userprofile class you have to provide a whole user, we have created a newUserProfile
      * class and linked it together. This method is used to make new entries. This simplifies an
      * entry, because the user only has to enter the user_id and not a whole user.
+     *
      * @param newUserProfile We must pass an userprofile so that we can create one
      * @return It returns the userprofile
      */
@@ -98,6 +101,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     /**
      * This method is responsible to find all user.
+     *
      * @param page This is responsible to show only a few user and to sort it.
      * @return It returns a few user (pageable)
      */
@@ -108,20 +112,22 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     /**
      * This method is responsible to delete an userprofile.
+     *
      * @param id The id is to know which user should be deleted.
      * @return A response entity returns with the appropriate HTTP status and a message.
      * @throws NullPointerException It may be that the userprofile doesn't exist.
-     * That's why we give a NullPointerException with it.
+     *                              That's why we give a NullPointerException with it.
      */
     @Override
-    public ResponseEntity deleteById(UUID id) throws NullPointerException {
+    public void deleteById(UUID id) throws NullPointerException {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isEmpty()) {
-            return ResponseEntity.status(404).body("USER NOT FOUND");
-        } else {
+            throw new NullPointerException("USERPROFILE NOT FOUND");
+        }else {
             userProfileRepository.deleteById(id);
-            return ResponseEntity.status(200).body("USER DELETED");
         }
+
+
     }
 
     /**
@@ -138,7 +144,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         if (optionalUserProfile.isPresent()) {
             return ResponseEntity.ok(optionalUserProfile.get());
         } else {
-            return ResponseEntity.status(404).body("USER NOT FOUND");
+            throw new NullPointerException("USERPROFILE NOT FOUND");
         }
     }
 

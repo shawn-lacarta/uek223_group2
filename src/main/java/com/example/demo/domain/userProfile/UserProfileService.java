@@ -15,11 +15,11 @@ import java.util.UUID;
 public interface UserProfileService {
     ResponseEntity findById(UUID id, Principal currentUser);
 
-    ResponseEntity addUserProfile(NewUserProfile newUserProfile)  throws InstanceAlreadyExistsException, NullPointerException;
+    UserProfile addUserProfile(NewUserProfile newUserProfile)  throws InstanceAlreadyExistsException, NullPointerException;
 
     Page<UserProfile> findAllUsers(Pageable page);
 
-    ResponseEntity deleteById(UUID id) throws NullPointerException;
+    void deleteById(UUID id) throws NullPointerException;
 
     UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser);
 

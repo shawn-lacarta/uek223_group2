@@ -68,9 +68,13 @@ public class UserProfileController {
      */
     @GetMapping("/{id}")
     @PreAuthorize("@userProfileSecurity.hasUserId(#id, #currentUser) || hasAuthority('READ_ALL')")
-    public ResponseEntity getOwnUser(@PathVariable UUID id, Principal currentUser) throws NullPointerException {
+    public ResponseEntity getOwnUser(@PathVariable UUID id, Principal currentUser) {
         logger.trace("GET ONE USERPROFILE ENDPOINT ACCESSED");
+        try{
         return ResponseEntity.ok().body(this.userProfileService.findById(id, currentUser));
+    } catch(NullPointerException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     /**
@@ -116,9 +120,15 @@ public class UserProfileController {
      */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
-    public ResponseEntity deleteUserProfile(@PathVariable("id") UUID id) throws NullPointerException{
+    public ResponseEntity deleteUserProfile(@PathVariable("id") UUID id) {
         logger.trace("DELETE USERPROFILE ENDPOINT ACCESSED");
-        return ResponseEntity.ok().body(userProfileService.deleteById(id));
+        try {
+           ResponseEntity.ok().body("DELETED");
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+
+        return null;
     }
 
 }
