@@ -47,14 +47,18 @@ public class UserProfileController {
      * @param userProfile We pass a userProfile from the NewUserProfile class
      * @return It returns an userprofile from the addUserProfile method in user-
      * ProfileService
-     * @throws InstanceAlreadyExistsException It may be that the userprofile already
-     * exists. That's why we give an InstanceAlreadyExistsException with it.
      */
     @PostMapping("/")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity addUserProfile(@RequestBody NewUserProfile userProfile) throws InstanceAlreadyExistsException {
+    public ResponseEntity addUserProfile(@RequestBody NewUserProfile userProfile) {
         logger.trace("POST USERPROFILES ENDPOINT ACCESSED");
-        return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
+        try {
+            return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
+        } catch(NullPointerException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (InstanceAlreadyExistsException e){
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
     }
 
     /**
@@ -69,9 +73,13 @@ public class UserProfileController {
      */
     @GetMapping("/{id}")
     @PreAuthorize("@userProfileSecurity.hasUserId(#id, #currentUser) || hasAuthority('READ_ALL')")
-    public ResponseEntity getOwnUser(@PathVariable UUID id, Principal currentUser) throws NullPointerException {
+    public ResponseEntity getOwnUser(@PathVariable UUID id, Principal currentUser) {
         logger.trace("GET ONE USERPROFILE ENDPOINT ACCESSED");
+        try{
         return ResponseEntity.ok().body(this.userProfileService.findById(id, currentUser));
+    } catch(NullPointerException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     /**
@@ -101,9 +109,13 @@ public class UserProfileController {
      */
     @PutMapping("/{id}")
     @PreAuthorize("@userProfileSecurity.hasUserId(#id, #currentUser) || hasAuthority('UPDATE_ALL')")
-    public ResponseEntity<UserProfile> updateUserProfile(@PathVariable UUID id, Principal currentUser, @RequestBody UserProfile userProfile){
+    public ResponseEntity updateUserProfile(@PathVariable UUID id, Principal currentUser, @RequestBody UserProfile userProfile){
         logger.trace("PUT USERPROFILE ENDPOINT ACCESSED");
-        return ResponseEntity.ok().body(userProfileService.updateUserProfile(userProfile, id, currentUser));
+        try {
+            return ResponseEntity.ok().body(userProfileService.updateUserProfile(userProfile, id, currentUser));
+        } catch(NullPointerException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     /**
@@ -117,9 +129,17 @@ public class UserProfileController {
      */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
-    public ResponseEntity deleteUserProfile(@PathVariable("id") UUID id) throws NullPointerException{
+    public ResponseEntity deleteUserProfile(@PathVariable("id") UUID id) {
         logger.trace("DELETE USERPROFILE ENDPOINT ACCESSED");
-        return ResponseEntity.ok().body(userProfileService.deleteById(id));
+        try {
+            userProfileService.deleteById(id);
+            return ResponseEntity.ok().body("USERPROFILE DELETED");
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+
+
     }
 
 }
