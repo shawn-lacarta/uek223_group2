@@ -67,6 +67,7 @@ public class UserProfileServiceImpl implements UserProfileService {
      * @return It returns the updated userprofile.
      */
     @Override
+    @Transactional(readOnly = true)
     public UserProfile updateUserProfile(UserProfile newUserProfile, UUID id, Principal currentUser) {
         return userProfileRepository.findById(id)
                 .map(updatedUserProfile -> {
