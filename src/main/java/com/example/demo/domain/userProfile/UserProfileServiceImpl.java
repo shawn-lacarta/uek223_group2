@@ -67,7 +67,6 @@ public class UserProfileServiceImpl implements UserProfileService {
      * @return It returns the updated userprofile.
      */
     @Override
-    @Transactional(readOnly = true)
     public UserProfile updateUserProfile(UserProfile newUserProfile, UUID id, Principal currentUser) {
         return userProfileRepository.findById(id)
                 .map(updatedUserProfile -> {
@@ -106,6 +105,7 @@ public class UserProfileServiceImpl implements UserProfileService {
      * @return It returns a few user (pageable)
      */
     @Override
+    @Transactional(readOnly = true)
     public Page<UserProfile> findAllUsers(Pageable page) {
         return userProfileRepository.findAll(page);
     }
