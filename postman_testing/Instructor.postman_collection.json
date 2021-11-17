@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "da0f7460-42fa-406b-8436-1ae8c61a2f0b",
+		"name": "Instructor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "findById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Address is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.address).to.eql(\"Noser\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Address is wrong\", function () { //should be fail\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.address).to.not.eql(\"Bern\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Authority is valid (error)\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.not.eql(\"Forbidden\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Authority is valid (status)\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.not.eql(403);\r",
+							"});\r",
+							"\r",
+							"var schema = {\r",
+							"  \"address\": {\r",
+							"    \"type\": \"String\"\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"var data1 = [\"Zuerich\", \"Bern\"];\r",
+							"var data2 = [\"Berlin\", 444];\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"  pm.expect(tv4.validate(data1, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "LuWid",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Luca",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userprofile/5b9b7994-4306-11ec-81d3-0242ac130003",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userprofile",
+						"5b9b7994-4306-11ec-81d3-0242ac130003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUserProfile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Nationality is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.nationality).to.eql(\"GERMANY\");\r",
+							"});\r",
+							"pm.test(\"Address is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.address).to.eql(\"Bern\");\r",
+							"});\r",
+							"pm.test(\"Phone Number is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.phoneNumber).to.eql(\"0777773265\");\r",
+							"});\r",
+							"pm.test(\"Phone Number is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.phoneNumber).to.eql(\"0777773265\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "LuWid",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Luca",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"f7a09db1-2b75-4bc7-a377-2c43d5c420ab\",\r\n    \"address\": \"Bern\",\r\n    \"birthDate\": \"2012-11-02\",\r\n    \"nationality\": \"GERMANY\",\r\n    \"phoneNumber\": \"0777773265\",\r\n    \"user_id\": \"9b20c52c-4407-11ec-81d3-0242ac130003\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/userprofile/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userprofile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Total Pages are valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.totalPages).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Total Pages are not valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.totalPages).to.not.eql(100);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Authority is valid (error)\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.not.eql(\"Forbidden\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Authority is valid (status)\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.not.eql(403);\r",
+							"});\r",
+							"\r",
+							"var schema = {\r",
+							"  \"address\": {\r",
+							"    \"type\": \"String\"\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"var data1 = [\"Zuerich\", \"Bern\"];\r",
+							"var data2 = [\"Berlin\", \"Luzern\"];\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"  pm.expect(tv4.validate(data1, schema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "LuWid",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Luca",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userprofile/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userprofile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "LuWid",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Luca",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userprofile/35bd0b68-44a8-11ec-81d3-0242ac130003",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userprofile",
+						"35bd0b68-44a8-11ec-81d3-0242ac130003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUserProfile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Adress is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.address).to.eql(\"Zuerich\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Adress is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.address).to.not.eql(\"Rueti\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Nationality is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.nationality).to.eql(\"MACEDONIAN\");\r",
+							"});\r",
+							"pm.test(\"Nationality is not valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.nationality).to.not.eql(\"Switzerland\");\r",
+							"});\r",
+							"pm.test(\"Phone Number is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.phoneNumber).to.eql(\"0763239784\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": \"87827f92-44a7-11ec-81d3-0242ac130003\",\r\n        \"address\": \"Zuerich\",\r\n        \"birthDate\": \"2005-01-17\",\r\n        \"nationality\": \"MACEDONIAN\",\r\n        \"phoneNumber\": \"0763239784\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/userprofile/f5cd0472-44a7-11ec-81d3-0242ac130003",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userprofile",
+						"f5cd0472-44a7-11ec-81d3-0242ac130003"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
