@@ -1,11 +1,8 @@
 package com.example.demo.domain.userProfile;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import javax.management.InstanceAlreadyExistsException;
-import javax.management.InstanceNotFoundException;
 import java.security.Principal;
 import java.util.UUID;
 

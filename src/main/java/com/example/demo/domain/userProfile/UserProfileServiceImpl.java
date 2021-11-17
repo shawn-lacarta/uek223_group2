@@ -4,14 +4,11 @@ import com.example.demo.domain.appUser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.InstanceAlreadyExistsException;
-import javax.management.InstanceNotFoundException;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
@@ -91,16 +88,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                         return userProfileRepository.save(newUserProfile);
                     });
         }
-
-
-
     }
-
-
-
-
-
-
 
     /**
      * This method is responsible to translate the userprofile with the newUserProfile. Since in
