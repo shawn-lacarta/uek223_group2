@@ -42,14 +42,18 @@ public class UserProfileController {
      * @param userProfile We pass a userProfile from the NewUserProfile class
      * @return It returns an userprofile from the addUserProfile method in user-
      * ProfileService
-     * @throws InstanceAlreadyExistsException It may be that the userprofile already
-     * exists. That's why we give an InstanceAlreadyExistsException with it.
      */
     @PostMapping("/")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity addUserProfile(@RequestBody NewUserProfile userProfile) throws InstanceAlreadyExistsException {
+    public ResponseEntity addUserProfile(@RequestBody NewUserProfile userProfile) {
         logger.trace("POST USERPROFILES ENDPOINT ACCESSED");
-        return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
+        try {
+            return ResponseEntity.ok().body(userProfileService.addUserProfile(userProfile));
+        } catch(NullPointerException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (InstanceAlreadyExistsException e){
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
     }
 
     /**

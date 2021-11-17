@@ -39,17 +39,16 @@ public class UserProfileServiceImpl implements UserProfileService {
      * exists, we need to pass the InstanceAlreadyExistsException along.
      */
     @Override
-    public ResponseEntity addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException {
+    public ResponseEntity addUserProfile(NewUserProfile newUserProfile) throws InstanceAlreadyExistsException, NullPointerException {
 
         UserProfile userProfile = newUserProfileToUserProfile(newUserProfile);
 
         if (userProfile.getUser() == null) {
-            return ResponseEntity.status(404).body("USER NOT FOUND");
+            throw new NullPointerException("USER NOT FOUND");
         } else if (userProfileRepository.findByUser(userProfile.getUser()) != null) {
-            return ResponseEntity.status(409).body("USER ALREADY HAS USERPROFILE");
+            throw new InstanceAlreadyExistsException("USER ALREADY HAS USERPROFILE");
         } else {
-            userProfileRepository.save(userProfile);
-            return ResponseEntity.status(201).body("USERPROFILE CREATED");
+            return ResponseEntity.ok(userProfileRepository.save(userProfile));
         }
     }
 
