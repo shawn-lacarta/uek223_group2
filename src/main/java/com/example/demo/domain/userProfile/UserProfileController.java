@@ -104,9 +104,13 @@ public class UserProfileController {
      */
     @PutMapping("/{id}")
     @PreAuthorize("@userProfileSecurity.hasUserId(#id, #currentUser) || hasAuthority('UPDATE_ALL')")
-    public ResponseEntity<UserProfile> updateUserProfile(@PathVariable UUID id, Principal currentUser, @RequestBody UserProfile userProfile){
+    public ResponseEntity updateUserProfile(@PathVariable UUID id, Principal currentUser, @RequestBody UserProfile userProfile){
         logger.trace("PUT USERPROFILE ENDPOINT ACCESSED");
-        return ResponseEntity.ok().body(userProfileService.updateUserProfile(userProfile, id, currentUser));
+        try {
+            return ResponseEntity.ok().body(userProfileService.updateUserProfile(userProfile, id, currentUser));
+        } catch(NullPointerException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     /**
@@ -123,12 +127,14 @@ public class UserProfileController {
     public ResponseEntity deleteUserProfile(@PathVariable("id") UUID id) {
         logger.trace("DELETE USERPROFILE ENDPOINT ACCESSED");
         try {
-           ResponseEntity.ok().body("DELETED");
+            userProfileService.deleteById(id);
+            return ResponseEntity.ok().body("USERPROFILE DELETED");
+
         } catch (NullPointerException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
 
-        return null;
+
     }
 
 }

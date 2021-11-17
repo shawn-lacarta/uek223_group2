@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.management.InstanceAlreadyExistsException;
+import javax.management.InstanceNotFoundException;
 import java.security.Principal;
 import java.util.UUID;
 
@@ -13,15 +14,15 @@ import java.util.UUID;
  * method headers are stored to create a better overview.
  */
 public interface UserProfileService {
-    ResponseEntity findById(UUID id, Principal currentUser);
+    UserProfile findById(UUID id, Principal currentUser);
 
     UserProfile addUserProfile(NewUserProfile newUserProfile)  throws InstanceAlreadyExistsException, NullPointerException;
 
     Page<UserProfile> findAllUsers(Pageable page);
 
-    void deleteById(UUID id) throws NullPointerException;
+    UserProfile deleteById(UUID id) throws NullPointerException;
 
-    UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser);
+    UserProfile updateUserProfile(UserProfile userProfile, UUID id, Principal currentUser) throws NullPointerException;
 
 }
 

@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
+import javax.management.InstanceNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
@@ -66,18 +68,37 @@ public class UserProfileServiceImpl implements UserProfileService {
      * @return It returns the updated userprofile.
      */
     @Override
-    public UserProfile updateUserProfile(UserProfile newUserProfile, UUID id, Principal currentUser) {
-        return userProfileRepository.findById(id)
-                .map(updatedUserProfile -> {
-                    updatedUserProfile.setAddress(newUserProfile.getAddress());
-                    updatedUserProfile.setNationality(newUserProfile.getNationality());
-                    updatedUserProfile.setBirthDate(newUserProfile.getBirthDate());
-                    updatedUserProfile.setPhoneNumber(newUserProfile.getPhoneNumber());
-                    return userProfileRepository.save(updatedUserProfile);
-                }).orElseGet(() -> {
-                    return userProfileRepository.save(newUserProfile);
-                });
+    public UserProfile updateUserProfile(UserProfile newUserProfile, UUID id, Principal currentUser) throws NullPointerException {
+        Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
+
+        if(optionalUserProfile.isEmpty()) {
+            throw new NullPointerException("USERPROFILE DOESN'T EXIST");
+        } else if(!userProfileRepository.existsById(id)) {
+            throw new NullPointerException("USER DOESN'T EXIST");
+
+        }else
+        {
+            return userProfileRepository.findById(id)
+                    .map(updatedUserProfile -> {
+                        updatedUserProfile.setAddress(newUserProfile.getAddress());
+                        updatedUserProfile.setNationality(newUserProfile.getNationality());
+                        updatedUserProfile.setBirthDate(newUserProfile.getBirthDate());
+                        updatedUserProfile.setPhoneNumber(newUserProfile.getPhoneNumber());
+                        return userProfileRepository.save(updatedUserProfile);
+                    }).orElseGet(() -> {
+                        return userProfileRepository.save(newUserProfile);
+                    });
+        }
+
+
+
     }
+
+
+
+
+
+
 
     /**
      * This method is responsible to translate the userprofile with the newUserProfile. Since in
@@ -119,15 +140,16 @@ public class UserProfileServiceImpl implements UserProfileService {
      *                              That's why we give a NullPointerException with it.
      */
     @Override
-    public void deleteById(UUID id) throws NullPointerException {
+    public UserProfile deleteById(UUID id) throws NullPointerException {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isEmpty()) {
-            throw new NullPointerException("USERPROFILE NOT FOUND");
+            throw new NullPointerException("USERPROFILE DOESN'T EXIST");
         }else {
             userProfileRepository.deleteById(id);
         }
 
 
+        return null;
     }
 
     /**
@@ -139,10 +161,10 @@ public class UserProfileServiceImpl implements UserProfileService {
      * That's why we give a NullPointerException with it.
      */
     @Override
-    public ResponseEntity findById(UUID id, Principal currentUser) throws NullPointerException {
+    public UserProfile findById(UUID id, Principal currentUser) throws NullPointerException {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isPresent()) {
-            return ResponseEntity.ok(optionalUserProfile.get());
+            return optionalUserProfile.get();
         } else {
             throw new NullPointerException("USERPROFILE NOT FOUND");
         }
