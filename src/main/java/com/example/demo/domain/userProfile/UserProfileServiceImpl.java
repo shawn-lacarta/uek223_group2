@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.security.Principal;
@@ -115,6 +117,7 @@ public class UserProfileServiceImpl implements UserProfileService {
      * That's why we give a NullPointerException with it.
      */
     @Override
+    @Transactional(rollbackFor = NullPointerException.class)
     public ResponseEntity deleteById(UUID id) throws NullPointerException {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isEmpty()) {
@@ -134,6 +137,7 @@ public class UserProfileServiceImpl implements UserProfileService {
      * That's why we give a NullPointerException with it.
      */
     @Override
+    @Transactional(rollbackFor = NullPointerException.class)
     public ResponseEntity findById(UUID id, Principal currentUser) throws NullPointerException {
         Optional<UserProfile> optionalUserProfile = this.userProfileRepository.findById(id);
         if (optionalUserProfile.isPresent()) {

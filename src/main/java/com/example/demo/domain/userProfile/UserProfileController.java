@@ -13,10 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.*;
 
@@ -25,6 +27,7 @@ import java.util.*;
  * The endpoints include the GET-, POST-, PUT- and DELETE methods.
  */
 @RestController
+@EnableTransactionManagement
 @RequestMapping("/userprofile")
 public class UserProfileController {
 
